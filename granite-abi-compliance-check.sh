@@ -1,3 +1,5 @@
+#!/bin/sh
+
 sudo rm -rf /tmp/abi-test
 mkdir -p /tmp/abi-test
 cd /tmp/abi-test
@@ -5,7 +7,7 @@ cd /tmp/abi-test
 sudo apt -y install abi-dumper abi-compliance-checker
 
 GRANITE_A_LP_BRANCH="lp:granite/0.4"
-GRANITE_A_VERSION="4"
+GRANITE_A_VERSION="0.4"
 GRANITE_B_LP_BRANCH="lp:granite"
 GRANITE_B_VERSION="0.5"
 
