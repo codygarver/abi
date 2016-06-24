@@ -4,10 +4,10 @@ cd /tmp/abi-test
 
 sudo apt -y install abi-dumper abi-compliance-checker
 
-GRANITE_A_LP_BRANCH="lp:granite/0.3"
-GRANITE_A_VERSION="0.3.1"
+GRANITE_A_LP_BRANCH="lp:granite/0.4"
+GRANITE_A_VERSION="4"
 GRANITE_B_LP_BRANCH="lp:granite"
-GRANITE_B_VERSION="0.4"
+GRANITE_B_VERSION="0.5"
 
 mkdir -p \
 	/tmp/"$GRANITE_A_VERSION-prefix" \
