@@ -2,7 +2,7 @@
 
 sudo rm -rf /tmp/abi-test
 mkdir -p /tmp/abi-test
-cd /tmp/abi-test
+cd /tmp/abi-test || exit
 
 sudo apt -y install abi-dumper abi-compliance-checker
 
@@ -16,13 +16,13 @@ mkdir -p \
 	/tmp/"$GRANITE_B_VERSION-prefix"
 
 bzr export "$GRANITE_A_VERSION-branch" "$GRANITE_A_LP_BRANCH"
-cd "$GRANITE_A_VERSION-branch"
+cd "$GRANITE_A_VERSION-branch" || exit
 mkdir build
-cd build
+cd build || exit
 cmake .. -DCMAKE_INSTALL_PREFIX=/tmp/abi-test/"$GRANITE_A_VERSION-prefix" -DCMAKE_BUILD_TYPE=Debug
 sudo make -j install
 
-cd /tmp/abi-test
+cd /tmp/abi-test || exit
 
 abi-dumper \
 	/tmp/abi-test/"$GRANITE_A_VERSION-prefix"/lib/libgranite.so \
@@ -30,13 +30,13 @@ abi-dumper \
 	-lver "$GRANITE_A_VERSION"
 
 bzr export "$GRANITE_B_VERSION-branch" "$GRANITE_B_LP_BRANCH"
-cd "$GRANITE_B_VERSION-branch"
+cd "$GRANITE_B_VERSION-branch" || exit
 mkdir build
-cd build
+cd build || exit
 cmake .. -DCMAKE_INSTALL_PREFIX=/tmp/abi-test/"$GRANITE_B_VERSION-prefix" -DCMAKE_BUILD_TYPE=Debug
 sudo make -j install
 
-cd /tmp/abi-test
+cd /tmp/abi-test || exit
 
 abi-dumper \
 	/tmp/abi-test/"$GRANITE_B_VERSION-prefix"/lib/libgranite.so \
