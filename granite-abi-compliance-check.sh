@@ -13,7 +13,7 @@ cd "$TEST_ROOT" || exit
 
 sudo apt-get -y install abi-dumper abi-compliance-checker > /dev/null
 
-function get_code() {
+get_code() {
 	GRANITE_LP_BRANCH="$1"
 	GRANITE_VERSION="$2"
 	mkdir -p "$TEST_ROOT"/"$GRANITE_VERSION"-prefix
@@ -26,7 +26,7 @@ function get_code() {
 	sudo make -j install > /dev/null
 }
 
-function dump_abi() {
+dump_abi() {
 	GRANITE_VERSION="$1"
 	echo "Dumping ABI version $GRANITE_VERSION..."
 	abi-dumper \
@@ -36,7 +36,7 @@ function dump_abi() {
 		> /dev/null
 }
 
-function compare_abi() {
+compare_abi() {
 	GRANITE_A_VERSION="$1"
 	GRANITE_B_VERSION="$2"
 	cd "$TEST_ROOT" || exit
