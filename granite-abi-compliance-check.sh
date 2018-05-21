@@ -1,10 +1,11 @@
 #!/bin/sh
 set -e
 
-GRANITE_A_LP_BRANCH="lp:granite/0.4"
-GRANITE_A_VERSION="0.4"
-GRANITE_B_LP_BRANCH="lp:granite"
-GRANITE_B_VERSION="0.5"
+GRANITE_GIT_URL="https://github.com/elementary/granite"
+GRANITE_A_COMMIT="4c3c936"
+GRANITE_A_VERSION="0.5"
+GRANITE_B_COMMIT="30ed300"
+GRANITE_B_VERSION="0.6"
 
 TEST_ROOT="/tmp/abi-test"
 sudo rm -rf "$TEST_ROOT"
@@ -14,12 +15,13 @@ cd "$TEST_ROOT" || exit
 sudo apt-get -y install abi-dumper abi-compliance-checker > /dev/null
 
 get_code() {
-	GRANITE_LP_BRANCH="$1"
-	GRANITE_VERSION="$2"
+	GRANITE_VERSION="$1"
+	GRANITE_COMMIT="$2"
 	mkdir -p "$TEST_ROOT"/"$GRANITE_VERSION"-prefix
-	echo "Downloading version $GRANITE_VERSION code from $GRANITE_LP_BRANCH..."
-	bzr export "$GRANITE_VERSION-branch" "$GRANITE_LP_BRANCH" --quiet
+	echo "Downloading commit $GRANITE_COMMIT code from $GRANITE_GIT_URL..."
+	git clone "$GRANITE_GIT_URL" "$GRANITE_VERSION-branch"
 	cd "$GRANITE_VERSION-branch" || exit
+	git reset --hard "$GRANITE_COMMIT"
 	mkdir build
 	cd build || exit
 	cmake .. -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_VERSION-prefix" -DCMAKE_BUILD_TYPE=Debug > /dev/null
@@ -48,8 +50,8 @@ compare_abi() {
 	echo "Report is at $TEST_ROOT/compat_reports/granite/"$GRANITE_A_VERSION"_to_"$GRANITE_B_VERSION"/compat_report.html"
 }
 
-get_code "$GRANITE_A_LP_BRANCH" "$GRANITE_A_VERSION"
-get_code "$GRANITE_B_LP_BRANCH" "$GRANITE_B_VERSION"
+get_code "$GRANITE_A_VERSION" "$GRANITE_A_COMMIT"
+get_code "$GRANITE_B_VERSION" "$GRANITE_B_COMMIT"
 dump_abi "$GRANITE_A_VERSION"
 dump_abi "$GRANITE_B_VERSION"
 compare_abi "$GRANITE_A_VERSION" "$GRANITE_B_VERSION"
