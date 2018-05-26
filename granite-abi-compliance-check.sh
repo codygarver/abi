@@ -8,12 +8,12 @@ GRANITE_B_COMMIT="30ed300"
 TEST_ROOT="/tmp/abi-test"
 sudo rm -rf "$TEST_ROOT"
 mkdir -p "$TEST_ROOT"
-cd "$TEST_ROOT" || exit
 
 sudo apt-get -y install abi-dumper abi-compliance-checker > /dev/null
 
 get_code() {
 	GRANITE_COMMIT="$1"
+	cd "$TEST_ROOT" || exit
 	mkdir -p "$TEST_ROOT"/"$GRANITE_COMMIT"-prefix
 	echo "Downloading commit $GRANITE_COMMIT code from $GRANITE_GIT_URL..."
 	git clone --quiet "$GRANITE_GIT_URL" "$GRANITE_COMMIT-branch"
