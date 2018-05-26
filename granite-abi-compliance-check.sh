@@ -9,6 +9,8 @@ TEST_ROOT="/tmp/abi-test"
 sudo rm -rf "$TEST_ROOT"
 mkdir -p "$TEST_ROOT"
 
+export VERBOSE=1
+
 sudo apt-get -y install abi-dumper abi-compliance-checker > /dev/null
 
 get_code() {
@@ -21,8 +23,9 @@ get_code() {
 	git reset --quiet --hard "$GRANITE_COMMIT"
 	mkdir build
 	cd build || exit
-	cmake .. -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_COMMIT-prefix" -DCMAKE_BUILD_TYPE=Debug > /dev/null
-	sudo make -j install > /dev/null
+	cmake .. -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_COMMIT-prefix" -DCMAKE_BUILD_TYPE=Debug -G Ninja > /dev/null
+	echo "Compiling $GRANITE_COMMIT..."
+	sudo ninja install > /dev/null
 }
 
 dump_abi() {
