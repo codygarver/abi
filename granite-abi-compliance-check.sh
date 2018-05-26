@@ -16,9 +16,9 @@ get_code() {
 	GRANITE_COMMIT="$1"
 	mkdir -p "$TEST_ROOT"/"$GRANITE_COMMIT"-prefix
 	echo "Downloading commit $GRANITE_COMMIT code from $GRANITE_GIT_URL..."
-	git clone "$GRANITE_GIT_URL" "$GRANITE_COMMIT-branch"
+	git clone --quiet "$GRANITE_GIT_URL" "$GRANITE_COMMIT-branch"
 	cd "$GRANITE_COMMIT-branch" || exit
-	git reset --hard "$GRANITE_COMMIT"
+	git reset --quiet --hard "$GRANITE_COMMIT"
 	mkdir build
 	cd build || exit
 	cmake .. -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_COMMIT-prefix" -DCMAKE_BUILD_TYPE=Debug > /dev/null
