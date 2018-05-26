@@ -43,8 +43,8 @@ compare_abi() {
 	abi-compliance-checker \
 		-l granite \
 		-old "$TEST_ROOT"/"$GRANITE_A_COMMIT".dump \
-		-new "$TEST_ROOT"/"$GRANITE_B_COMMIT".dump
-	echo "Report is at $TEST_ROOT/compat_reports/granite/"$GRANITE_A_COMMIT"_to_"$GRANITE_B_COMMIT"/compat_report.html"
+		-new "$TEST_ROOT"/"$GRANITE_B_COMMIT".dump \
+		-report-path "$TEST_ROOT"/compat_report.html
 }
 
 get_code "$GRANITE_A_COMMIT"
