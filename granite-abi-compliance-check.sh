@@ -21,9 +21,7 @@ get_code() {
 	git clone --quiet "$GRANITE_GIT_URL" "$GRANITE_COMMIT-branch"
 	cd "$GRANITE_COMMIT-branch" || exit
 	git reset --quiet --hard "$GRANITE_COMMIT"
-	mkdir build
-	cd build || exit
-	cmake .. -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_COMMIT-prefix" -DCMAKE_BUILD_TYPE=Debug -G Ninja > /dev/null
+	cmake . -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_COMMIT-prefix" -DCMAKE_BUILD_TYPE=Debug -G Ninja > /dev/null
 	echo "Compiling $GRANITE_COMMIT..."
 	sudo ninja install > /dev/null
 }
