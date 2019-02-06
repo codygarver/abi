@@ -33,6 +33,7 @@ dump_abi() {
 		"$TEST_ROOT"/"$GRANITE_COMMIT-prefix"/lib/libgranite.so \
 		-o "$TEST_ROOT"/"$GRANITE_COMMIT".dump \
 		-lver "$GRANITE_COMMIT" \
+		-quiet \
 		> /dev/null
 }
 
