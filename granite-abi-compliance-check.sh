@@ -2,11 +2,11 @@
 set -e
 
 GRANITE_GIT_URL="https://github.com/elementary/granite"
-GRANITE_A_COMMIT="4c3c936"
-GRANITE_B_COMMIT="30ed300"
+GRANITE_A_COMMIT="6d0dac2"
+GRANITE_B_COMMIT="c1d97d8"
 
 TEST_ROOT="/tmp/abi-test"
-sudo rm -rf "$TEST_ROOT"
+rm -rf "$TEST_ROOT"
 mkdir -p "$TEST_ROOT"
 
 export VERBOSE=1
@@ -19,16 +19,16 @@ get_code() {
 	git clone --quiet "$GRANITE_GIT_URL" "$GRANITE_COMMIT-branch"
 	cd "$GRANITE_COMMIT-branch" || exit
 	git reset --quiet --hard "$GRANITE_COMMIT"
-	cmake . -DCMAKE_INSTALL_PREFIX="$TEST_ROOT"/"$GRANITE_COMMIT-prefix" -DCMAKE_BUILD_TYPE=Debug -G Ninja > /dev/null
+	meson build --prefix "$TEST_ROOT"/"$GRANITE_COMMIT-prefix" > /dev/null
 	echo "Compiling $GRANITE_COMMIT..."
-	sudo ninja install > /dev/null
+	ninja -C build install > /dev/null
 }
 
 dump_abi() {
 	GRANITE_COMMIT="$1"
 	echo "Dumping ABI version $GRANITE_COMMIT..."
 	abi-dumper \
-		"$TEST_ROOT"/"$GRANITE_COMMIT-prefix"/lib*/*.so \
+		"$TEST_ROOT"/"$GRANITE_COMMIT-prefix"/lib*/libgranite.so \
 		-o "$TEST_ROOT"/"$GRANITE_COMMIT".dump \
 		-lver "$GRANITE_COMMIT" \
 		-quiet \
