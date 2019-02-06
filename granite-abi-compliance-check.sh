@@ -11,8 +11,6 @@ mkdir -p "$TEST_ROOT"
 
 export VERBOSE=1
 
-sudo apt-get -y install abi-dumper abi-compliance-checker > /dev/null
-
 get_code() {
 	GRANITE_COMMIT="$1"
 	cd "$TEST_ROOT" || exit
