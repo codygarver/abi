@@ -28,7 +28,7 @@ dump_abi() {
 	GRANITE_COMMIT="$1"
 	echo "Dumping ABI version $GRANITE_COMMIT..."
 	abi-dumper \
-		"$TEST_ROOT"/"$GRANITE_COMMIT-prefix"/lib/libgranite.so \
+		"$TEST_ROOT"/"$GRANITE_COMMIT-prefix"/lib*/*.so \
 		-o "$TEST_ROOT"/"$GRANITE_COMMIT".dump \
 		-lver "$GRANITE_COMMIT" \
 		-quiet \
